@@ -9,9 +9,12 @@ ONBUILD COPY mix.lock /usr/src/app/
 ONBUILD RUN mix local.hex --force && \
         mix local.rebar --force && \
         mix deps.get && \
-        mix deps.compile
+        mix deps.compile && \
+        MIX_ENV=test mix deps.compile
 
 ONBUILD COPY . /usr/src/app
+
+ONBUILD RUN mix compile
 
 EXPOSE 3000
 
